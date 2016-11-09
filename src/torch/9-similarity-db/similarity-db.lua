@@ -25,9 +25,9 @@ function getInitialRefIndex(similarities)
 end
 
 function similarityDb()
-  local dataFolder = '../data/encoded-images'
+  local dataFolder = tiefvision_commons.dataPath('encoded-images')
   local testLines = tiefvision_commons.getFiles(dataFolder)
-  local similaritiesDbPath = '../data/img-unsup-similarity-db'
+  local similaritiesDbPath = tiefvision_commons.dataPath('img-unsup-similarity-db')
   local similarities = torch.ones(#testLines, #testLines) * -1
   if(tiefvision_commons.fileExists(similaritiesDbPath)) then
     similarities = torch.load(similaritiesDbPath)
@@ -49,7 +49,7 @@ function similarityDb()
       end
     end
     -- compare itself with its mirror
-    local flippedEncoding = torch.load('../data/encoded-images-flipped/' .. reference):double()
+    local flippedEncoding = torch.load(tiefvision_commons.dataPath('encoded-images-flipped', reference)):double()
     local similarity = similarity_lib.similarity(referenceEncoding, flippedEncoding)
     if (similarity) then
       similarities[referenceIndex][referenceIndex] = similarity

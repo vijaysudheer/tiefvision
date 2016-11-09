@@ -16,7 +16,7 @@ local similarity_db_lib = require 'similarity_db_lib'
 local search_commons = require 'search_commons'
 
 function getTestError(referenceEncoding)
-  local dataFolder = '../data/encoded-images'
+  local dataFolder = tiefvision_commons.dataPath('encoded-images')
   local testLines = tiefvision_commons.getFiles(dataFolder)
   local comparisonTable = {}
   for testIndex = 1, #testLines do
@@ -37,9 +37,9 @@ function getImage(fileName, imagesFolder)
   local xmax = bboxes[1][3]
   local ymax = bboxes[1][4]
   input = image.crop(input, xmin, ymin, xmax, ymax)
-  image.save('../../../resources/dresses-db/uploaded/bbox/' .. fileName, input)
+  image.save(tiefvision_commons.resourcePath('dresses-db/uploaded/bbox', fileName), input)
   local encoder = similarity_db_lib.getEncoder()
-  local encodedOutput = similarity_db_lib.encodeImage('../../../resources/dresses-db/uploaded/bbox/' .. fileName, encoder)
+  local encodedOutput = similarity_db_lib.encodeImage(tiefvision_commons.resourcePath('dresses-db/uploaded/bbox', fileName), encoder)
   return encodedOutput:double()
 end
 

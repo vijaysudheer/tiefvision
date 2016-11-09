@@ -37,7 +37,7 @@ function train(trainIn, trainOut, model, criterion, index, optimState)
 end
 
 function loadDataFromFolder(dataFolder)
-  local folder = '../data/' .. dataFolder
+  local folder = tiefvision_commons.dataPath(dataFolder)
   local fileCount = 0
   for file in lfs.dir(folder) do
     if (lfs.attributes(folder .. '/' .. file, "mode") == "file") then
@@ -57,15 +57,15 @@ function loadDataFromFolder(dataFolder)
 end
 
 function getTestError(model, criterion, index)
-  local testIn = torch.load("../data/bbox-test-in/1.data")
-  local testOut = torch.load("../data/bbox-test-out/1.data")
+  local testIn = torch.load(tiefvision_commons.dataPath('bbox-test-in/1.data'))
+  local testOut = torch.load(tiefvision_commons.dataPath('bbox-test-out/1.data'))
   local output = model:forward(testIn)
   local err = criterion:forward(output, testOut[index])
   return err
 end
 
 function saveModel(model, index)
-  local filename = '../models/locatorconv-' .. index .. '.model'
+  local filename = tiefvision_commons.modelPath('locatorconv-' .. index .. '.model')
   print('==> Saving Model: ' .. filename)
   torch.save(filename, model)
   print('==> Model Saved: ' .. filename)
@@ -96,7 +96,7 @@ function loadCriterion()
 end
 
 function loadSavedModel(index)
-  local modelPath = '../models/locatorconv-' .. index .. '.model'
+  local modelPath = tiefvision_commons.modelPath('locatorconv-' .. index .. '.model')
   if(tiefvision_commons.fileExists(modelPath)) then
     return torch.load(modelPath)
   else

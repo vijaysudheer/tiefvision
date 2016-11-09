@@ -22,9 +22,9 @@ function getFiles(folder)
   return files
 end
 
-local folder = "../../../resources/dresses-db/master"
-local bboxesFolder = "../../../resources/dresses-db/bboxes"
-local flippedBboxesFolder = "../../../resources/dresses-db/bboxes-flipped"
+local folder = tiefvision_commons.resourcePath('dresses-db/master')
+local bboxesFolder = tiefvision_commons.resourcePath('dresses-db/bboxes')
+local flippedBboxesFolder = tiefvision_commons.resourcePath('dresses-db/bboxes-flipped')
 local files = getFiles(folder)
 for fileIndex = 1, #files do
   if not tiefvision_commons.fileExists(bboxesFolder .. '/1/' .. files[fileIndex]) then

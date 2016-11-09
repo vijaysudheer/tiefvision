@@ -14,22 +14,22 @@ tiefvision_commons = require 'tiefvision_commons'
 local bboxlib = {}
 
 function loadLocator(index)
-  return torch.load('../models/locatorconv-' .. index .. '.model')
+  return torch.load(tiefvision_commons.modelPath('locatorconv-' .. index .. '.model'))
 end
 
 function loadClassifier()
-  return torch.load('../models/classifier.model')
+  return torch.load(tiefvision_commons.modelPath('classifier.model'))
 end
 
 function loadEncoder()
-  return torch.load('../models/encoder.model')
+  return torch.load(tiefvision_commons.modelPath('encoder.model'))
 end
 
 function getBoundingBoxes(model, encodedInputs, index)
-  local avg = torch.load("../models/bbox-train-mean")[index]
+  local avg = torch.load(tiefvision_commons.modelPath('bbox-train-mean'))[index]
   local avgTensor = torch.Tensor(1):cuda()
   avgTensor[1] = avg
-  local std = torch.load("../models/bbox-train-std")[index]
+  local std = torch.load(tiefvision_commons.modelPath('bbox-train-std'))[index]
   local stdTensor = torch.Tensor(1):cuda()
   stdTensor[1] = std
   local output = model:forward(encodedInputs)
@@ -193,7 +193,7 @@ end
 
 function getFiles()
   local files = {}
-  local folder = "../data/db/high"
+  local folder = tiefvision_commons.dataPath('db/high')
   for file in lfs.dir(folder) do
     if (lfs.attributes(folder .. '/' .. file, "mode") == "file") then
       table.insert(files, file)
@@ -204,7 +204,7 @@ end
 
 function getTestImageFiles()
   local files = {}
-  local folder = '../../../resources/dresses-db/master'
+  local folder = tiefvision_commons.resourcePath('dresses-db/master')
   for file in lfs.dir(folder) do
     if (lfs.attributes(folder .. '/' .. file, "mode") == "file") then
       table.insert(files, folder .. '/' .. file)

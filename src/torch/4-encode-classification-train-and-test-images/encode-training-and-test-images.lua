@@ -28,8 +28,9 @@ end
 function getFilesAsTable(prefix)
   local trainingFiles = {}
   for cl = 0, 1 do
-    local lines = tiefvision_commons.getLines("../../../resources/bounding-boxes/" .. cl .. "-" .. prefix .. ".txt")
-    print("../../../resources/bounding-boxes/" .. cl .. "-" .. prefix .. ".txt :" .. #lines)
+    local file_path = tiefvision_commons.resourcePath('bounding-boxes', cl .. "-" .. prefix .. ".txt")
+    local lines = tiefvision_commons.getLines(file_path)
+    print(file_path .. ': ' .. #lines)
     trainingFiles[cl + 1] = lines
   end
   return trainingFiles
@@ -50,7 +51,7 @@ function testSavedData(data)
 end
 
 function getFile(type, cl, i)
-  return '../data/classification/' .. cl .. '/' .. type .. '/' .. i .. '.data'
+  return tiefvision_commons.dataPath('classification', cl, type, i .. '.data')
 end
 
 function encodeData(type, encoder)
@@ -70,7 +71,7 @@ function encodeData(type, encoder)
   end
 end
 
-local encoder = torch.load('../models/encoder.model')
+local encoder = torch.load(tiefvision_commons.modelPath('encoder.model'))
 
 encodeData('train', encoder)
 encodeData('test', encoder)

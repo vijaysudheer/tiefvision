@@ -12,8 +12,8 @@ local tiefvision_commons = require 'tiefvision_commons'
 local search_commons = require 'search_commons'
 
 function getTestError(reference)
-  local similarityDb = '../data/db/similarity/img-sup-similarity-db'
-  local dataFolder = '../data/db/similarity/img-similarity-deeprank'
+  local similarityDb = tiefvision_commons.dataPath('db/similarity/img-sup-similarity-db')
+  local dataFolder = tiefvision_commons.dataPath('db/similarity/img-similarity-deeprank')
   local testLines = tiefvision_commons.getFiles(dataFolder)
   local similarities = torch.load(similarityDb):double()
   local referenceIndex = search_commons.getIndex(testLines, reference)

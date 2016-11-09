@@ -72,7 +72,7 @@ function getTrainingSet()
 end
 
 function getDataSet(file)
-  local lines = tiefvision_commons.getLines('../../../resources/dresses-db/' .. file)
+  local lines = tiefvision_commons.getLines(tiefvision_commons.resourcePath('dresses-db', file))
   local trainingSet = {}
   for i = 1, #lines do
     local reference, similar, different = string.match(lines[i], "(.+),(.+),(.+)")
@@ -110,8 +110,8 @@ function getHeightWindow(input, heightStart)
 end
 
 function getReferenceSimilarDifferentRaw(datasource)
-  local encodedFolder = '../data/db/similarity/img-enc-cnn-encoder'
-  local flippedEncodedFolder = '../data/db/similarity/img-enc-cnn-encoder-flipped'
+  local encodedFolder = tiefvision_commons.dataPath('db/similarity/img-enc-cnn-encoder')
+  local flippedEncodedFolder = tiefvision_commons.dataPath('db/similarity/img-enc-cnn-encoder-flipped')
   local reference = torch.load(encodedFolder .. '/' .. datasource[1]):cuda()
   local similar
   if (datasource[1] == datasource[2]) then
@@ -212,11 +212,11 @@ function test(similarityModel)
 end
 
 function saveModel(model)
-  torch.save('../models/similarity.model', model)
+  torch.save(tiefvision_commons.modelPath('similarity.model'), model)
 end
 
 function loadModel()
-  local modelPath = '../models/similarity.model'
+  local modelPath = tiefvision_commons.modelPath('similarity.model')
   if (tiefvision_commons.fileExists(modelPath)) then
     return torch.load(modelPath)
   else

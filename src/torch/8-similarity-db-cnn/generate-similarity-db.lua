@@ -27,5 +27,5 @@ function createDb(sourceFolder, destinationFolder)
   end
 end
 
-createDb("../../../resources/dresses-db/bboxes/1", "../data/encoded-images")
-createDb("../../../resources/dresses-db/bboxes-flipped/1", "../data/encoded-images-flipped")
+createDb(tiefvision_commons.resourcePath('dresses-db/bboxes/1'), tiefvision_commons.dataPath('encoded-images'))
+createDb(tiefvision_commons.resourcePath('dresses-db/bboxes-flipped/1'), tiefvision_commons.dataPath('encoded-images-flipped'))

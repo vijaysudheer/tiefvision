@@ -49,11 +49,11 @@ function train(model, criterion, epochs, optimState)
 end
 
 function getFilename(type, cl, i)
-  return '../data/classification/' .. (cl - 1) .. '/' .. type .. '/' .. i .. '.data'
+  return tiefvision_commons.dataPath('classification', (cl - 1), type, i .. '.data')
 end
 
 function getBatchesInClassAndType(class, type)
-  local folder = '../data/classification/' .. (class - 1) .. '/' .. type
+  local folder = tiefvision_commons.dataPath('classification', (class - 1), type)
   local lines = tiefvision_commons.getFiles(folder)
   return #lines
 end
@@ -115,7 +115,7 @@ function maxIndex(outputs)
 end
 
 function saveModelConv(model)
-  local filename = '../models/classifier.model'
+  local filename = tiefvision_commons.modelPath('classifier.model')
   print('==> Saving Model: ' .. filename)
   torch.save(filename, model)
 end
@@ -145,7 +145,7 @@ function loadCriterion()
 end
 
 function loadSavedModelConv()
-  local modelPath = '../models/classifier.model'
+  local modelPath = tiefvision_commons.modelPath('classifier.model')
   if(tiefvision_commons.fileExists(modelPath)) then
     return torch.load(modelPath)
   else

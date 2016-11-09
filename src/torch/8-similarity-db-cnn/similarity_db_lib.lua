@@ -11,7 +11,7 @@ local tiefvision_commons = require 'tiefvision_commons'
 local similarity_db_lib = {}
 
 function similarity_db_lib.getEncoder()
-  return torch.load('../models/encoder.model')
+  return torch.load(tiefvision_commons.modelPath('encoder.model'))
 end
 
 function similarity_db_lib.encodeImage(imagePath, encoder)

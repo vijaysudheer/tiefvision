@@ -11,13 +11,13 @@ local tiefvision_commons = require 'tiefvision_commons'
 
 function generateDatabase(imageEncoder)
   -- unflipped
-  local dataFolder = '../data/db/similarity/img-enc-cnn-encoder'
-  local destFolder = '../data/db/similarity/img-similarity-deeprank'
+  local dataFolder = tiefvision_commons.dataPath('db/similarity/img-enc-cnn-encoder')
+  local destFolder = tiefvision_commons.dataPath('db/similarity/img-similarity-deeprank')
   generateDatabaseForFolders(dataFolder, destFolder, imageEncoder)
 
   -- flipped
-  local dataFolderFlipped = '../data/db/similarity/img-enc-cnn-encoder-flipped'
-  local destFolderFlipped = '../data/db/similarity/img-flipped-similarity-deeprank'
+  local dataFolderFlipped = tiefvision_commons.dataPath('db/similarity/img-enc-cnn-encoder-flipped')
+  local destFolderFlipped = tiefvision_commons.dataPath('db/similarity/img-flipped-similarity-deeprank')
   generateDatabaseForFolders(dataFolderFlipped, destFolderFlipped, imageEncoder)
 end
 
@@ -38,7 +38,7 @@ function saveEncoding(dataFolder, destFolder, imageName, imageEncoder)
 end
 
 function loadModel()
-  return torch.load('../models/similarity.model')
+  return torch.load(tiefvision_commons.modelPath('similarity.model'))
 end
 
 function removeReshapeModule(imageEncoder)

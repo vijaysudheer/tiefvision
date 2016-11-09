@@ -10,7 +10,6 @@
 local image = require 'image'
 local lfs = require 'lfs'
 local tiefvision_commons = {}
-local tiefvision_home  = os.getenv("TIEFVISION_HOME")
 
 function tiefvision_commons.fileExists(name)
   local f = io.open(name, "r")
@@ -59,7 +58,7 @@ function tiefvision_commons.load_synset()
 end
 
 function tiefvision_commons.img_mean()
-  local img_mean_name = tiefvision_home .. '/src/torch/models/ilsvrc_2012_mean.t7'
+  local img_mean_name = tiefvision_commons.modelPath('ilsvrc_2012_mean.t7')
   return torch.load(img_mean_name).img_mean:transpose(3, 1)
 end
 
@@ -84,6 +83,24 @@ function tiefvision_commons.preprocess(im)
 
   local imageMinusAvg = bgrImage - image.scale(img_mean, im:size()[2], im:size()[3], 'bilinear')
   return imageMinusAvg:cuda()
+end
+
+function tiefvision_commons.path(...)
+  local file_path_table = table.insert(arg, 1, os.getenv('TIEFVISION_HOME'))
+  local file_path = table.concat(file_path_table, '/')
+  return string.gsub(file_path, '/+', '/')
+end
+
+function tiefvision_commons.dataPath(path_from_data_folder)
+  return tiefvision_commons.path('src/torch/data', unpack(path_from_data_folder))
+end
+
+function tiefvision_commons.modelPath(path_from_model_folder)
+  return tiefvision_commons.path('src/torch/models', unpack(path_from_model_folder))
+end
+
+function tiefvision_commons.resourcePath(path_from_resource_folder)
+  return tiefvision_commons.path('src/resources', unpack(path_from_resource_folder))
 end
 
 return tiefvision_commons

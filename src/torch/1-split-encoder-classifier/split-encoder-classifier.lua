@@ -8,7 +8,9 @@
 -- to encode images.
 --
 
-package.path = package.path .. ';../0-tiefvision-commons/?.lua'
+local libs = io.popen("realpath $(dirname " .. arg[0] .. ")/.."):read()
+package.path = package.path .. ';' .. libs .. '/0-tiefvision-commons/?.lua'
+
 require 'loadcaffe'
 require 'image'
 require 'inn'

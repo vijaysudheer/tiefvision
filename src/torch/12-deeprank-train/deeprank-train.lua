@@ -2,7 +2,8 @@
 -- You may use, distribute and modify this code under the
 -- terms of the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0.txt).
 
-package.path = package.path .. ';../0-tiefvision-commons/?.lua;./?.lua'
+local libs = io.popen("realpath $(dirname " .. arg[0] .. ")/.."):read()
+package.path = package.path .. ';' .. libs .. '/0-tiefvision-commons/?.lua'
 
 require 'nn'
 require 'inn'

@@ -5,7 +5,9 @@
 -- Uses the image encoder to encode the train and test
 -- data sets for the bounding box regression
 
-package.path = package.path .. ';../0-tiefvision-commons/?.lua'
+local libs = io.popen("realpath $(dirname " .. arg[0] .. ")/.."):read()
+package.path = package.path .. ';' .. libs .. '/0-tiefvision-commons/?.lua'
+
 require 'nn'
 require 'inn'
 require 'image'

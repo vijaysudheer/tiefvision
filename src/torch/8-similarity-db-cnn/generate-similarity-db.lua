@@ -2,7 +2,12 @@
 -- You may use, distribute and modify this code under the
 -- terms of the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0.txt).
 
-package.path = package.path .. ';../0-tiefvision-commons/?.lua;../5-train-classification/?.lua;./?.lua'
+local libs = io.popen("realpath $(dirname " .. arg[0] .. ")/.."):read()
+package.path = package.path .. ';' ..
+  libs .. '/0-tiefvision-commons/?.lua;' ..
+  libs .. '/5-train-classification/?.lua;' ..
+  libs .. '/8-similarity-db-cnn/?.lua'
+
 require 'inn'
 require 'optim'
 require 'torch'

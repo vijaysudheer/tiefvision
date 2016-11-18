@@ -2,13 +2,20 @@
 -- You may use, distribute and modify this code under the
 -- terms of the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0.txt).
 
-package.path = package.path .. ';../0-tiefvision-commons/?.lua;../6-bboxlib/?.lua;../9-similarity-db/?.lua;../8-similarity-db-cnn/?.lua;../10-similarity-searcher-cnn-db/?.lua'
+local libs = io.popen("realpath $(dirname " .. arg[0] .. ")/.."):read()
+package.path = package.path .. ';' ..
+  libs .. '/0-tiefvision-commons/?.lua;' ..
+  libs .. '/6-bboxlib/?.lua;' ..
+  libs .. '/8-similarity-db-cnn/?.lua;' ..
+  libs .. '/9-similarity-db/?.lua;' ..
+  libs .. '/10-similarity-searcher-cnn-db/?.lua'
 
 require 'inn'
 require 'optim'
 require 'torch'
 require 'xlua'
 require 'lfs'
+
 local tiefvision_commons = require 'tiefvision_commons'
 local bboxlib = require 'bboxlib'
 local similarity_lib = require 'similarity_lib'
